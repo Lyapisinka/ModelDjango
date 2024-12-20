@@ -2,7 +2,22 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import UserRegister
 from .models import Game, Buyer
+from django.core.paginator import Paginator
+from .models import News
 
+
+def news_view(request):
+    news_list = News.objects.all().order_by('-date')  # Получаем все новости, отсортированные по дате
+    paginator = Paginator(news_list, 5)  # Пагинируем по 5 новостей на странице
+
+    page_number = request.GET.get('page')  # Получаем номер страницы из запроса
+    news_page = paginator.get_page(page_number)  # Получаем текущую страницу
+
+    context = {
+        'news': news_page,  # Передаем объект страницы в контекст
+    }
+
+    return render(request, 'news.html', context)
 
 def product_list(request):
     games = Game.objects.all()
