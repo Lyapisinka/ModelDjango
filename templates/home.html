@@ -1,0 +1,10 @@
+{% extends 'menu.html' %}
+
+{% block pagename %}
+Главная страница
+{% endblock %}
+
+{% block content %}
+<h1>Добро пожаловать на главную страницу!</h1>
+<p><a href="{% url 'sign_up_by_django' %}">Войти</a></p>
+{% endblock %}
